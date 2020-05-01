@@ -2,8 +2,10 @@ import React, { useCallback } from 'react';
 
 import { StyleSheet, View, Text } from 'react-native';
 import { Button } from 'react-native-paper';
-import { actions } from '../redux/ducks/exemple';
 import { connect } from 'react-redux';
+
+import Envelope from '../assets/envelope.svg';
+import { actions } from '../redux/ducks/exemple';
 
 const styles = StyleSheet.create({
   homeScreen: {
@@ -23,10 +25,7 @@ function HomeScreen({ setData }) {
       <Text>Home Screen</Text>
       <Text>Home Screen</Text>
       <Text>Home Screen</Text>
-      <Text>Home Screen</Text>
-      <Text>Home Screen</Text>
-      <Text>Home Screen</Text>
-      <Text>Home Screen</Text>
+      <Envelope width={100} height={100} />
       <Button onPress={handleTeste}>Teste</Button>
     </View>
   );
