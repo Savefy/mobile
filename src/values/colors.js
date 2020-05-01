@@ -8,4 +8,6 @@ export const colors = {
 
   textOnPrimary: '#252625',
   textOnSecondary: '#F2F1DF',
+
+  textDescription: '#9B9B9B',
 };
