@@ -14,11 +14,13 @@ const styles = StyleSheet.create({
   titleText: {
     textAlign: 'center',
     color: colors.accent,
+    fontFamily: 'Montserrat-Medium',
   },
   moneyText: {
     textAlign: 'center',
     color: colors.background,
     fontSize: 24,
+    fontFamily: 'Montserrat-Medium',
   },
 });
 

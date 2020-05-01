@@ -12,6 +12,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { store } from './redux';
 import HomeScreen from './screens/HomeScreen';
 import { colors } from './values/colors';
+import { StatusBar } from 'react-native';
 
 const navigationTheme = {
   ...NavigationTheme,
@@ -66,6 +67,7 @@ function App() {
   return (
     <ReduxProvider store={store}>
       <PaperProvider theme={paperTheme}>
+        <StatusBar backgroundColor={colors.primary} barStyle="light-content" />
         <NavigationContainer theme={navigationTheme}>
           <Tab.Navigator
             tabBarOptions={tabNavigatorOptions}
