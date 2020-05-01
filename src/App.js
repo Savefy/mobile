@@ -10,7 +10,7 @@ import {
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import { store } from './redux';
-import HomeScreen from './Screens/HomeScreen';
+import HomeScreen from './screens/HomeScreen';
 import { colors } from './values/colors';
 
 const navigationTheme = {
