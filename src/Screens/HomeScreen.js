@@ -17,12 +17,12 @@ const styles = StyleSheet.create({
 });
 
 const ENVELOPES = [
-  { category: 'Conta de luz', price: '125,50' },
-  { category: 'Lazer', price: '125,50' },
-  { category: 'Prostitutas', price: '125,50' },
-  { category: 'Esporte', price: '125,50' },
-  { category: 'Lazer', price: '125,50' },
-  { category: 'Lazer', price: '125,50' },
+  { id: '1', category: 'Conta de luz', price: '125,50' },
+  { id: '2', category: 'Lazer', price: '125,50' },
+  { id: '3', category: 'Prostitutas', price: '125,50' },
+  { id: '4', category: 'Esporte', price: '125,50' },
+  { id: '5', category: 'Lazer', price: '125,50' },
+  { id: '6', category: 'Lazer', price: '125,50' },
 ];
 
 const Spacer = () => <View style={styles.spacer} />;
