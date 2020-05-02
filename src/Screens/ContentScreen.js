@@ -1,7 +1,7 @@
-import React from 'react';
-
-import { StyleSheet, View, Text } from 'react-native';
+import React, { PureComponent } from 'react';
 import { Appbar, Card } from 'react-native-paper';
+import { StyleSheet, View, Text } from 'react-native';
+import { withNavigation } from 'react-navigation';
 import { colors } from '../values/colors';
 import LoseIcon from '../assets/lose.svg';
 import CardIcon from '../assets/debit-card.svg';
@@ -50,69 +50,83 @@ const styles = StyleSheet.create({
   },
 });
 
-const Cards = () => {
-  return (
-    <View style={styles.cardsSection}>
-      <View style={styles.cardsRow}>
-        <View style={styles.cardsCol}>
-          <Card style={styles.card}>
-            <ContentCard>
-              <View>
-                <CardIcon width={110} height={110} />
-              </View>
-            </ContentCard>
-          </Card>
-          <Text style={styles.subtitle}>Compras</Text>
-        </View>
-        <View style={styles.cardsCol}>
-          <Card style={styles.card}>
-            <ContentCard>
-              <View>
-                <ManagementIcon width={110} height={110} />
-              </View>
-            </ContentCard>
-          </Card>
-          <Text style={styles.subtitle}>Investimentos</Text>
-        </View>
-      </View>
-      <View style={styles.cardsRow}>
-        <View style={styles.cardsCol}>
-          <Card style={styles.card}>
-            <ContentCard>
-              <View>
-                <LoseIcon width={110} height={110} />
-              </View>
-            </ContentCard>
-          </Card>
-          <Text style={styles.subtitle}>Renda extra</Text>
-        </View>
-        <View style={styles.cardsCol}>
-          <Card style={styles.card}>
-            <ContentCard>
-              <View>
-                <InvestmentIcon width={110} height={110} />
-              </View>
-            </ContentCard>
-          </Card>
-          <Text style={styles.subtitle}>Terminologias</Text>
-        </View>
-      </View>
-    </View>
-  );
-};
+class Cards extends PureComponent {
+  constructor(props) {
+    super(props);
+  }
 
-const ContentScreen = () => {
-  return (
-    <View>
-      <Header>
-        <Content
-          title="Conteúdos que podem ajudar"
-          titleStyle={styles.appBarText}
-        />
-      </Header>
-      <Cards />
-    </View>
-  );
-};
+  _showContent = () => {
+    const { navigation } = this.props;
+
+    navigation.navigate('VisualizarConteudo');
+  };
+
+  render() {
+    return (
+      <View style={styles.cardsSection}>
+        <View style={styles.cardsRow}>
+          <View style={styles.cardsCol}>
+            <Card style={styles.card} onPress={() => this._showContent()}>
+              <ContentCard>
+                <View>
+                  <CardIcon width={110} height={110} />
+                </View>
+              </ContentCard>
+            </Card>
+            <Text style={styles.subtitle}>Compras</Text>
+          </View>
+          <View style={styles.cardsCol}>
+            <Card style={styles.card}>
+              <ContentCard>
+                <View>
+                  <ManagementIcon width={110} height={110} />
+                </View>
+              </ContentCard>
+            </Card>
+            <Text style={styles.subtitle}>Investimentos</Text>
+          </View>
+        </View>
+        <View style={styles.cardsRow}>
+          <View style={styles.cardsCol}>
+            <Card style={styles.card}>
+              <ContentCard>
+                <View>
+                  <LoseIcon width={110} height={110} />
+                </View>
+              </ContentCard>
+            </Card>
+            <Text style={styles.subtitle}>Renda extra</Text>
+          </View>
+          <View style={styles.cardsCol}>
+            <Card style={styles.card}>
+              <ContentCard>
+                <View>
+                  <InvestmentIcon width={110} height={110} />
+                </View>
+              </ContentCard>
+            </Card>
+            <Text style={styles.subtitle}>Terminologias</Text>
+          </View>
+        </View>
+      </View>
+    );
+  }
+}
+
+class ContentScreen extends PureComponent {
+  render() {
+    return (
+      <View>
+        <Header>
+          <Content
+            title="Conteúdos que podem ajudar"
+            titleStyle={styles.appBarText}
+          />
+        </Header>
+        <Cards navigation={this.props.navigation} />
+      </View>
+    );
+  }
+}
 
 export default ContentScreen;

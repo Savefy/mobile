@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { Provider as ReduxProvider } from 'react-redux';
+import { createStackNavigator } from '@react-navigation/stack';
 import { DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {
@@ -15,6 +16,7 @@ import { StatusBar } from 'react-native';
 
 import HomeScreen from './screens/HomeScreen';
 import ContentScreen from './screens/ContentScreen';
+import ContentVisualizationScreen from './screens/ContentVisualizationScreen';
 
 const navigationTheme = {
   ...NavigationTheme,
@@ -38,6 +40,7 @@ const paperTheme = {
 };
 
 const Tab = createBottomTabNavigator();
+const Stack = createStackNavigator();
 
 const tabNavigatorOptions = {
   inactiveBackgroundColor: colors.accent,
@@ -66,6 +69,26 @@ const settingsOptions = {
   tabBarIcon: (props) => <MaterialCommunityIcons name="settings" {...props} />,
 };
 
+const ContentManagement = () => {
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        header: () => null,
+      }}>
+      <Stack.Screen
+        options={studyOptions}
+        name="Conteudos"
+        component={ContentScreen}
+      />
+      <Stack.Screen
+        options={homeOptions}
+        name="VisualizarConteudo"
+        component={ContentVisualizationScreen}
+      />
+    </Stack.Navigator>
+  );
+};
+
 function App() {
   return (
     <ReduxProvider store={store}>
@@ -88,7 +111,7 @@ function App() {
             <Tab.Screen
               options={studyOptions}
               name="Conteudos"
-              component={ContentScreen}
+              component={ContentManagement}
             />
             <Tab.Screen
               options={settingsOptions}
