@@ -24,12 +24,12 @@ const styles = StyleSheet.create({
   },
 });
 
-const Envelope = ({ category, price }) => {
+const Envelope = ({ title, valueGoal }) => {
   return (
     <View style={styles.envelopeContainer}>
       <EnvelopeSVG width={100} height={100} />
-      <Text style={styles.titleText}>{category}</Text>
-      <Text style={styles.moneyText}>{price}</Text>
+      <Text style={styles.titleText}>{title}</Text>
+      <Text style={styles.moneyText}>{valueGoal}</Text>
     </View>
   );
 };

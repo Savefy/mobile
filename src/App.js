@@ -8,12 +8,15 @@ import {
   DefaultTheme as NavigationTheme,
 } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createStackNavigator } from '@react-navigation/stack';
 
 import { store } from './redux';
 import HomeScreen from './screens/HomeScreen';
 import MovementsScreen from './screens/MovementsScreen';
 import { colors } from './values/colors';
 import { StatusBar } from 'react-native';
+import EnvelopesScreen from './screens/EnvelopesScreen';
+import NewEnvelope from './screens/NewEnvelope';
 
 const navigationTheme = {
   ...NavigationTheme,
@@ -37,8 +40,10 @@ const paperTheme = {
 };
 
 const Tab = createBottomTabNavigator();
+const Stack = createStackNavigator();
 
 const tabNavigatorOptions = {
+  keyboardHidesTabBar: true,
   inactiveBackgroundColor: colors.accent,
   activeBackgroundColor: colors.accent,
   inactiveTintColor: colors.background,
@@ -53,6 +58,7 @@ const homeOptions = {
 };
 
 const envelopeOptions = {
+  title: 'Envelopes',
   tabBarIcon: (props) => <MaterialCommunityIcons name="email" {...props} />,
 };
 
@@ -70,11 +76,31 @@ const settingsOptions = {
   tabBarIcon: (props) => <MaterialCommunityIcons name="settings" {...props} />,
 };
 
+const EnvelopeStackScreen = () => {
+  return (
+    <Stack.Navigator headerMode="none">
+      <Stack.Screen
+        options={envelopeOptions}
+        name="Envelope"
+        component={EnvelopesScreen}
+      />
+      <Stack.Screen
+        options={studyOptions}
+        name="NewEnvelope"
+        component={NewEnvelope}
+      />
+    </Stack.Navigator>
+  );
+};
+
 function App() {
   return (
     <ReduxProvider store={store}>
       <PaperProvider theme={paperTheme}>
-        <StatusBar backgroundColor={colors.primary} barStyle="light-content" />
+        <StatusBar
+          backgroundColor={colors.primaryDark}
+          barStyle="light-content"
+        />
         <NavigationContainer theme={navigationTheme}>
           <Tab.Navigator
             tabBarOptions={tabNavigatorOptions}
@@ -86,8 +112,8 @@ function App() {
             />
             <Tab.Screen
               options={envelopeOptions}
-              name="Home2"
-              component={HomeScreen}
+              name="Envelope"
+              component={EnvelopeStackScreen}
             />
             <Tab.Screen
               options={studyOptions}

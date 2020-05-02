@@ -5,6 +5,7 @@ export const colors = {
   accent: '#252625',
 
   background: '#F2F1DF',
+  backgroundOpacity: 'rgba(242,241,223,0.6)',
 
   textOnPrimary: '#252625',
   textOnSecondary: '#F2F1DF',
