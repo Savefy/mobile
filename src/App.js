@@ -10,9 +10,11 @@ import {
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import { store } from './redux';
-import HomeScreen from './screens/HomeScreen';
 import { colors } from './values/colors';
 import { StatusBar } from 'react-native';
+
+import HomeScreen from './screens/HomeScreen';
+import ContentScreen from './screens/ContentScreen';
 
 const navigationTheme = {
   ...NavigationTheme,
@@ -57,6 +59,7 @@ const envelopeOptions = {
 
 const studyOptions = {
   tabBarIcon: (props) => <MaterialCommunityIcons name="book" {...props} />,
+  title: 'Conteúdos',
 };
 
 const settingsOptions = {
@@ -84,8 +87,8 @@ function App() {
             />
             <Tab.Screen
               options={studyOptions}
-              name="Home3"
-              component={HomeScreen}
+              name="Conteudos"
+              component={ContentScreen}
             />
             <Tab.Screen
               options={settingsOptions}
