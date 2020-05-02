@@ -11,6 +11,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import { store } from './redux';
 import HomeScreen from './screens/HomeScreen';
+import MovementsScreen from './screens/MovementsScreen';
 import { colors } from './values/colors';
 import { StatusBar } from 'react-native';
 
@@ -59,6 +60,12 @@ const studyOptions = {
   tabBarIcon: (props) => <MaterialCommunityIcons name="book" {...props} />,
 };
 
+const movementsOptions = {
+  tabBarIcon: (props) => (
+    <MaterialCommunityIcons name="clipboard-flow" {...props} />
+  ),
+};
+
 const settingsOptions = {
   tabBarIcon: (props) => <MaterialCommunityIcons name="settings" {...props} />,
 };
@@ -86,6 +93,11 @@ function App() {
               options={studyOptions}
               name="Home3"
               component={HomeScreen}
+            />
+            <Tab.Screen
+              options={movementsOptions}
+              name="Movements"
+              component={MovementsScreen}
             />
             <Tab.Screen
               options={settingsOptions}
