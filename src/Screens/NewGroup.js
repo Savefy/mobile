@@ -9,7 +9,7 @@ import { useForm, useField } from 'react-final-form-hooks';
 
 const styles = StyleSheet.create({
   headerTitle: {
-    color: colors.textOnSecondary,
+    color: colors.textOnPrimary,
     textAlign: 'center',
     marginLeft: -60,
   },
@@ -54,7 +54,7 @@ const HeaderBackButton = ({ navigation }) => {
   const handleBackAction = useCallback(() => {
     navigation.goBack();
   }, [navigation]);
-  return <BackAction color={colors.background} onPress={handleBackAction} />;
+  return <BackAction color={colors.textOnPrimary} onPress={handleBackAction} />;
 };
 
 const NewGroup = ({ route, navigation }) => {

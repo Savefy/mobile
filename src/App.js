@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { Provider as ReduxProvider } from 'react-redux';
 import { DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
@@ -9,6 +9,7 @@ import {
 } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
+import SplashScreen from 'react-native-splash-screen';
 
 import { store } from './redux';
 import HomeScreen from './screens/HomeScreen';
@@ -115,6 +116,10 @@ const GroupStackScreen = () => {
 };
 
 function App() {
+  useEffect(() => {
+    SplashScreen.hide();
+  });
+
   return (
     <ReduxProvider store={store}>
       <PaperProvider theme={paperTheme}>

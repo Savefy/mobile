@@ -1,6 +1,13 @@
 import React from 'react';
 
-import { StyleSheet, View, Text, Image, FlatList } from 'react-native';
+import {
+  StyleSheet,
+  View,
+  Text,
+  Image,
+  FlatList,
+  ScrollView,
+} from 'react-native';
 import { ProgressChart } from 'react-native-chart-kit';
 
 import Envelope from '../components/Envelope';
@@ -21,7 +28,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Montserrat-Medium',
   },
   statusContainer: {
-    backgroundColor: colors.primaryLight,
+    backgroundColor: colors.primary,
     borderBottomRightRadius: 15,
     borderBottomLeftRadius: 15,
     paddingVertical: 16,
@@ -39,13 +46,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   statusName: {
-    color: colors.accent,
+    color: colors.textOnPrimary,
   },
   statusFlatList: {
     paddingHorizontal: 16,
   },
   statusHeaderText: {
     fontSize: 19,
+    color: colors.textOnPrimary,
     paddingLeft: 16,
     fontFamily: 'Montserrat-SemiBold',
     paddingBottom: 4,
@@ -129,7 +137,7 @@ const chartConfig = {
 const HomeScreen = () => {
   return (
     <View style={styles.homeScreen}>
-      <View>
+      <ScrollView>
         <StatusComponent />
         <View style={styles.metasGrupoContainer}>
           <View style={{ flex: 1 }}>
@@ -152,7 +160,7 @@ const HomeScreen = () => {
           </View>
         </View>
         <EnvelopesComponent />
-      </View>
+      </ScrollView>
     </View>
   );
 };

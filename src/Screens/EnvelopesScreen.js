@@ -24,11 +24,11 @@ const styles = StyleSheet.create({
   },
   envelopeTitle: {
     fontSize: 16,
-    color: colors.background,
+    color: colors.textOnPrimary,
     fontFamily: 'Montserrat-SemiBold',
   },
   headerTitle: {
-    color: colors.textOnSecondary,
+    color: colors.textOnPrimary,
     textAlign: 'center',
   },
   spacer: {
@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
   envelopeDeadline: {
     fontSize: 14,
     opacity: 0.7,
-    color: colors.background,
+    color: colors.textOnPrimary,
     fontFamily: 'Montserrat-Medium',
   },
   editButton: {
@@ -112,7 +112,7 @@ const EnvelopesScreen = ({ navigation }) => {
               <ProgressBar
                 style={styles.progressBar}
                 progress={item.percent}
-                color={colors.background}
+                color={colors.textOnPrimary}
               />
               <Text style={styles.envelopeValue}>R$ {item.valueGoal}</Text>
             </View>

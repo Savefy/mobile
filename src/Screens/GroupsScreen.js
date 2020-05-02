@@ -34,7 +34,10 @@ const styles = StyleSheet.create({
     position: 'absolute',
     margin: 16,
     right: 0,
-    bottom: -200,
+    bottom: 0,
+  },
+  container: {
+    flex: 1,
   },
 });
 
@@ -91,7 +94,7 @@ const GroupsScreen = ({ navigation }) => {
   }, [navigation]);
 
   return (
-    <View>
+    <View style={styles.container}>
       <Header>
         <Content title="Grupos" titleStyle={styles.HeaderText} />
       </Header>
