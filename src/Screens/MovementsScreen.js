@@ -76,18 +76,20 @@ class MovementsScreen extends PureComponent {
 
   _renderCategory = (category) => {
     let iconName;
-    if (category === 'ALIMENTACAO') {
+    if (category === 'alimentação') {
       iconName = 'food';
-    } else if (category === 'SAUDE') {
+    } else if (category === 'saúde') {
       iconName = 'heart-pulse';
-    } else if (category === 'TRANSPORTE') {
+    } else if (category === 'transporte') {
       iconName = 'bus';
-    } else if (category === 'CASA') {
+    } else if (category === 'casa') {
       iconName = 'home';
-    } else if (category === 'EDUCACAO') {
+    } else if (category === 'educação') {
       iconName = 'book-multiple';
-    } else {
+    } else if (category === 'outros') {
       iconName = 'settings-helper';
+    } else {
+      iconName = 'credit-card-plus';
     }
     return <MaterialCommunityIcons name={iconName} size={32} />;
   };
