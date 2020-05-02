@@ -76,20 +76,18 @@ class MovementsScreen extends PureComponent {
 
   _renderCategory = (category) => {
     let iconName;
-    if (category === 'alimentação') {
+    if (category === 'ALIMENTACAO') {
       iconName = 'food';
-    } else if (category === 'saúde') {
+    } else if (category === 'SAUDE') {
       iconName = 'heart-pulse';
-    } else if (category === 'transporte') {
+    } else if (category === 'TRANSPORTE') {
       iconName = 'bus';
-    } else if (category === 'casa') {
+    } else if (category === 'CASA') {
       iconName = 'home';
-    } else if (category === 'educação') {
+    } else if (category === 'EDUCACAO') {
       iconName = 'book-multiple';
-    } else if (category === 'outros') {
-      iconName = 'settings-helper';
     } else {
-      iconName = 'credit-card-plus';
+      iconName = 'settings-helper';
     }
     return <MaterialCommunityIcons name={iconName} size={32} />;
   };
@@ -130,7 +128,13 @@ class MovementsScreen extends PureComponent {
   };
 
   _renderList = () => {
-    return <FlatList data={moviments} renderItem={this._renderMovementItem} />;
+    return (
+      <FlatList
+        data={moviments}
+        renderItem={this._renderMovementItem}
+        keyExtractor={(item) => item.id}
+      />
+    );
   };
 
   render() {

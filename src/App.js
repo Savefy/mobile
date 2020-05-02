@@ -13,6 +13,8 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { store } from './redux';
 import HomeScreen from './screens/HomeScreen';
 import MovementsScreen from './screens/MovementsScreen';
+import GroupsScreen from './screens/GroupsScreen';
+import NewGroup from './screens/NewGroup';
 import { colors } from './values/colors';
 import { StatusBar } from 'react-native';
 import EnvelopesScreen from './screens/EnvelopesScreen';
@@ -72,8 +74,10 @@ const movementsOptions = {
   ),
 };
 
-const settingsOptions = {
-  tabBarIcon: (props) => <MaterialCommunityIcons name="settings" {...props} />,
+const gruopsOptions = {
+  tabBarIcon: (props) => (
+    <MaterialCommunityIcons name="account-group" {...props} />
+  ),
 };
 
 const EnvelopeStackScreen = () => {
@@ -88,6 +92,23 @@ const EnvelopeStackScreen = () => {
         options={studyOptions}
         name="NewEnvelope"
         component={NewEnvelope}
+      />
+    </Stack.Navigator>
+  );
+};
+
+const GroupStackScreen = () => {
+  return (
+    <Stack.Navigator headerMode="none">
+      <Stack.Screen
+        options={gruopsOptions}
+        name="Group"
+        component={GroupsScreen}
+      />
+      <Stack.Screen
+        options={gruopsOptions}
+        name="NewGroup"
+        component={NewGroup}
       />
     </Stack.Navigator>
   );
@@ -126,9 +147,9 @@ function App() {
               component={MovementsScreen}
             />
             <Tab.Screen
-              options={settingsOptions}
-              name="Config"
-              component={HomeScreen}
+              options={gruopsOptions}
+              name="Grupos"
+              component={GroupStackScreen}
             />
           </Tab.Navigator>
         </NavigationContainer>
