@@ -1,20 +1,11 @@
 import React from 'react';
 
-import {
-  StyleSheet,
-  View,
-  Text,
-  Image,
-  FlatList,
-  Dimensions,
-} from 'react-native';
+import { StyleSheet, View, Text, Image, FlatList } from 'react-native';
 import { ProgressChart } from 'react-native-chart-kit';
 
 import Envelope from '../components/Envelope';
 import { colors } from '../values/colors';
 import { STATUS, ENVELOPES } from '../values/strings';
-
-const screenWidth = Dimensions.get('window').width;
 
 const styles = StyleSheet.create({
   homeScreen: {

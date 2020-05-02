@@ -1,10 +1,52 @@
 export const ENVELOPES = [
-  { id: '1', category: 'Conta de luz', price: '125,50' },
-  { id: '2', category: 'Lazer', price: '125,50' },
-  { id: '3', category: 'Teste', price: '125,50' },
-  { id: '4', category: 'Esporte', price: '125,50' },
-  { id: '5', category: 'Lazer', price: '125,50' },
-  { id: '6', category: 'Lazer', price: '125,50' },
+  {
+    id: '1',
+    title: 'Conta de luz',
+    valueGoal: '125,50',
+    createdAt: '2020-03-25T12:00:00-06:30',
+    accomplishAt: '2020-03-25T12:00:00-06:30',
+    percent: 0.6,
+  },
+  {
+    id: '2',
+    title: 'Lazer',
+    valueGoal: '125,50',
+    createdAt: '2020-03-25T12:00:00-06:30',
+    accomplishAt: '2020-03-25T12:00:00-06:30',
+    percent: 0.6,
+  },
+  {
+    id: '3',
+    title: 'Teste',
+    valueGoal: '125,50',
+    createdAt: '2020-03-25T12:00:00-06:30',
+    accomplishAt: '2020-03-25T12:00:00-06:30',
+    percent: 0.6,
+  },
+  {
+    id: '4',
+    title: 'Esporte',
+    valueGoal: '125,50',
+    createdAt: '2020-03-25T12:00:00-06:30',
+    accomplishAt: '2020-03-25T12:00:00-06:30',
+    percent: 0.6,
+  },
+  {
+    id: '5',
+    title: 'Lazer',
+    valueGoal: '125,50',
+    createdAt: '2020-03-25T12:00:00-06:30',
+    accomplishAt: '2020-03-25T12:00:00-06:30',
+    percent: 0.6,
+  },
+  {
+    id: '6',
+    title: 'Lazer',
+    valueGoal: '125,50',
+    createdAt: '2020-03-25T12:00:00-06:30',
+    accomplishAt: '2020-03-25T12:00:00-06:30',
+    percent: 0.6,
+  },
 ];
 
 export const STATUS = [
