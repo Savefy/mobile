@@ -45,3 +45,30 @@ export const STATUS = [
       'https://joveminvestidor.com.br/wp-content/uploads/2019/11/600px-Thiago_Nigro_fundador_do_canal_O_Primo_Rico.png',
   },
 ];
+
+export const MOVEMENT_CATEGORIES = [
+  {
+    key: 'ALIMENTACAO',
+    label: 'Alimentação',
+  },
+  {
+    key: 'SAUDE',
+    label: 'Saúde',
+  },
+  {
+    key: 'TRANSPORTE',
+    label: 'Transporte',
+  },
+  {
+    key: 'CASA',
+    label: 'casa',
+  },
+  {
+    key: 'EDUCACAO',
+    label: 'Educação',
+  },
+  {
+    key: 'OUTROS',
+    label: 'Outros',
+  },
+];
