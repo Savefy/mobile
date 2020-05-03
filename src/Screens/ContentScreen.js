@@ -1,7 +1,6 @@
 import React, { PureComponent } from 'react';
 import { Appbar, Card } from 'react-native-paper';
 import { StyleSheet, View, Text } from 'react-native';
-import { withNavigation } from 'react-navigation';
 import { colors } from '../values/colors';
 import LoseIcon from '../assets/lose.svg';
 import CardIcon from '../assets/debit-card.svg';

@@ -61,6 +61,7 @@ const tabNavigatorOptions = {
 
 const homeOptions = {
   tabBarIcon: (props) => <MaterialCommunityIcons name="home" {...props} />,
+  title: 'Início',
 };
 
 const envelopeOptions = {
@@ -77,6 +78,7 @@ const movementsOptions = {
   tabBarIcon: (props) => (
     <MaterialCommunityIcons name="clipboard-flow" {...props} />
   ),
+  title: 'Movimentações',
 };
 
 const gruopsOptions = {
