@@ -1,11 +1,13 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import { StyleSheet, View, ScrollView } from 'react-native';
+import { StyleSheet, View, ScrollView, Keyboard } from 'react-native';
 
 import { Appbar, TextInput, Button } from 'react-native-paper';
-const { Header, Content, BackAction } = Appbar;
+import axios from 'axios';
 
 import { colors } from '../values/colors';
 import { useForm, useField } from 'react-final-form-hooks';
+
+const { Header, Content, BackAction } = Appbar;
 
 const styles = StyleSheet.create({
   headerTitle: {
@@ -58,11 +60,13 @@ const HeaderBackButton = ({ navigation }) => {
 };
 
 const NewGroup = ({ route, navigation }) => {
-  const [isEditing, setIsEditing] = useState();
+  const [isEditing, setIsEditing] = useState(false);
+
   const group = route.params?.group;
 
   const onSubmit = (values) => {
-    console.log(values);
+    Keyboard.dismiss();
+    navigation.goBack();
   };
 
   const { form, handleSubmit, pristine, submitting } = useForm({
@@ -74,11 +78,11 @@ const NewGroup = ({ route, navigation }) => {
   const description = useField('description', form);
 
   useEffect(() => {
-    setIsEditing(Boolean(group?.id));
+    setIsEditing(Boolean(route.params?.group?.id));
     if (group) {
       form.initialize(group);
     }
-  }, [setIsEditing, group, form]);
+  }, [setIsEditing, group, form, route.params]);
 
   return (
     <>
@@ -89,7 +93,7 @@ const NewGroup = ({ route, navigation }) => {
           title={isEditing ? 'Editar grupo' : 'Novo grupo'}
         />
       </Header>
-      <ScrollView style={styles.content}>
+      <ScrollView style={styles.content} keyboardShouldPersistTaps="handled">
         <View style={styles.formInput}>
           <TextInput
             {...title.input}
@@ -113,6 +117,8 @@ const NewGroup = ({ route, navigation }) => {
         <Button
           mode="contained"
           onPress={handleSubmit}
+          loading={submitting}
+          disabled={pristine || submitting}
           color={colors.primaryDark}
           contentStyle={styles.buttonContent}
           labelStyle={styles.saveButton}>

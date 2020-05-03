@@ -1,10 +1,10 @@
-import React, { useCallback } from 'react';
-import { View, FlatList, StyleSheet, Text } from 'react-native';
+import React, { useCallback, useState, useEffect } from 'react';
+import { View, FlatList, StyleSheet, Text, RefreshControl } from 'react-native';
 
 import {} from '@react-navigation/core';
 import { Appbar, Card, IconButton, FAB } from 'react-native-paper';
+import axios from 'axios';
 
-import { groups } from './dataGroups';
 import { colors } from '../values/colors';
 
 const { Header, Content } = Appbar;
@@ -21,13 +21,16 @@ const styles = StyleSheet.create({
   card: {
     backgroundColor: colors.primary,
     margin: 16,
+    padding: 16,
     borderRadius: 16,
   },
   groupDescription: {
     color: colors.textOnSecondary,
   },
   editIcon: {
-    paddingRight: 16,
+    position: 'absolute',
+    top: 0,
+    right: 0,
   },
   fab: {
     position: 'absolute',
@@ -38,7 +41,13 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
+  cardTitle: {
+    margin: 0,
+    padding: 0,
+  },
 });
+
+const KEY_EXTRACTOR = (item) => String(item.id);
 
 const EditGroupButton = ({ item, navigation }) => {
   const handleOnPress = useCallback(
@@ -58,46 +67,63 @@ const EditGroupButton = ({ item, navigation }) => {
 };
 
 const GroupsScreen = ({ navigation }) => {
+  const [fetching, setFetching] = useState(false);
+  const [groups, setGroups] = useState([]);
+
   const renderItem = useCallback(
     ({ item }) => {
       const { title, description } = item;
       return (
-        <Card style={styles.card}>
-          <Card.Title
-            title={title}
-            right={(props) => (
-              <EditGroupButton navigation={navigation} {...props} item={item} />
-            )}
-          />
-          <Card.Content>
+        <View style={styles.card}>
+          <View style={styles.cardTitle}>
+            <Text>{title}</Text>
+          </View>
+          <View style={styles.cardTitle}>
             <Text style={styles.groupDescription}>{description}</Text>
-          </Card.Content>
-        </Card>
+          </View>
+          <EditGroupButton navigation={navigation} item={item} />
+        </View>
       );
     },
     [navigation],
   );
 
-  const renderList = useCallback(() => {
-    return (
-      <FlatList
-        data={groups}
-        keyExtractor={(item) => item.id}
-        renderItem={renderItem}
-      />
-    );
-  }, [renderItem]);
+  const handleRefreshGroups = useCallback(async () => {
+    try {
+      setFetching(true);
+      const { data } = await axios.get('/users/1/groups');
+      setGroups(data.data);
+    } catch (ex) {
+      console.warn(ex);
+    } finally {
+      setFetching(false);
+    }
+  }, []);
 
   const handleNewEnvelope = useCallback(() => {
     navigation.navigate('NewGroup');
   }, [navigation]);
+
+  useEffect(() => {
+    handleRefreshGroups();
+  }, [handleRefreshGroups]);
 
   return (
     <View style={styles.container}>
       <Header>
         <Content title="Grupos" titleStyle={styles.HeaderText} />
       </Header>
-      {renderList()}
+      <FlatList
+        refreshControl={
+          <RefreshControl
+            refreshing={fetching}
+            onRefresh={handleRefreshGroups}
+          />
+        }
+        data={groups}
+        keyExtractor={KEY_EXTRACTOR}
+        renderItem={renderItem}
+      />
       <FAB icon="plus" style={styles.fab} onPress={handleNewEnvelope} />
     </View>
   );

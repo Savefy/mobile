@@ -74,10 +74,14 @@ const styles = StyleSheet.create({
 
 const Spacer = () => <View style={styles.spacer} />;
 
-const EditEnvelopeButton = ({ item, navigation }) => {
+const EditEnvelopeButton = ({ item, navigation, onSuccess }) => {
   const handleOnPress = useCallback(
-    () => navigation.navigate('NewEnvelope', { envelope: item }),
-    [navigation, item],
+    () =>
+      navigation.navigate('NewEnvelope', {
+        envelope: item,
+        onSuccess,
+      }),
+    [navigation, item, onSuccess],
   );
 
   return (
@@ -90,10 +94,12 @@ const EditEnvelopeButton = ({ item, navigation }) => {
   );
 };
 
-const NewEnvelopeFAB = ({ navigation }) => {
+const NewEnvelopeFAB = ({ navigation, onSuccess }) => {
   const handleNewEnvelope = useCallback(() => {
-    navigation.navigate('NewEnvelope');
-  }, [navigation]);
+    navigation.navigate('NewEnvelope', {
+      onSuccess,
+    });
+  }, [navigation, onSuccess]);
 
   return <FAB style={styles.fab} icon="plus" onPress={handleNewEnvelope} />;
 };
@@ -108,7 +114,6 @@ const EnvelopesScreen = ({ navigation }) => {
       const response = await axios.get('/users/1/goals');
       const { data } = response;
       setEnvelopes(data.data);
-      console.log({ data });
     } catch (ex) {
       console.warn(ex);
     } finally {
@@ -141,12 +146,16 @@ const EnvelopesScreen = ({ navigation }) => {
                 R$ {maskDecimal(item.valueGoal / 100)}
               </Text>
             </View>
-            <EditEnvelopeButton item={item} navigation={navigation} />
+            <EditEnvelopeButton
+              item={item}
+              navigation={navigation}
+              onSuccess={requestEnvelopes}
+            />
           </View>
         </>
       );
     },
-    [navigation],
+    [navigation, requestEnvelopes],
   );
 
   return (
@@ -163,7 +172,7 @@ const EnvelopesScreen = ({ navigation }) => {
         ItemSeparatorComponent={Spacer}
         contentContainerStyle={styles.flatListConteiner}
       />
-      <NewEnvelopeFAB navigation={navigation} />
+      <NewEnvelopeFAB navigation={navigation} onSuccess={requestEnvelopes} />
     </>
   );
 };
