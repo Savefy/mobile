@@ -13,11 +13,10 @@ const { Header, Content } = Appbar;
 
 const styles = StyleSheet.create({
   appBarText: {
-    color: colors.background,
+    color: colors.textOnPrimary,
     fontFamily: 'Montserrat-SemiBold',
-    fontSize: 19,
     textAlign: 'center',
-    paddingBottom: 4,
+    fontSize: 18,
   },
   card: {
     backgroundColor: colors.primary,
@@ -55,10 +54,12 @@ class Cards extends PureComponent {
     super(props);
   }
 
-  _showContent = () => {
+  _showContent = (key) => {
     const { navigation } = this.props;
 
-    navigation.navigate('VisualizarConteudo');
+    navigation.navigate('VisualizarConteudo', {
+      key: key,
+    });
   };
 
   render() {
@@ -66,7 +67,9 @@ class Cards extends PureComponent {
       <View style={styles.cardsSection}>
         <View style={styles.cardsRow}>
           <View style={styles.cardsCol}>
-            <Card style={styles.card} onPress={() => this._showContent()}>
+            <Card
+              style={styles.card}
+              onPress={() => this._showContent('compras')}>
               <ContentCard>
                 <View>
                   <CardIcon width={110} height={110} />
@@ -76,7 +79,9 @@ class Cards extends PureComponent {
             <Text style={styles.subtitle}>Compras</Text>
           </View>
           <View style={styles.cardsCol}>
-            <Card style={styles.card}>
+            <Card
+              style={styles.card}
+              onPress={() => this._showContent('investimentos')}>
               <ContentCard>
                 <View>
                   <ManagementIcon width={110} height={110} />
@@ -88,7 +93,9 @@ class Cards extends PureComponent {
         </View>
         <View style={styles.cardsRow}>
           <View style={styles.cardsCol}>
-            <Card style={styles.card}>
+            <Card
+              style={styles.card}
+              onPress={() => this._showContent('extra')}>
               <ContentCard>
                 <View>
                   <LoseIcon width={110} height={110} />
@@ -98,7 +105,9 @@ class Cards extends PureComponent {
             <Text style={styles.subtitle}>Renda extra</Text>
           </View>
           <View style={styles.cardsCol}>
-            <Card style={styles.card}>
+            <Card
+              style={styles.card}
+              onPress={() => this._showContent('termos')}>
               <ContentCard>
                 <View>
                   <InvestmentIcon width={110} height={110} />
