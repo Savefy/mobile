@@ -9,6 +9,7 @@ import {
 
 import { Appbar, TextInput, Button } from 'react-native-paper';
 const { Header, Content, BackAction } = Appbar;
+import axios from 'axios';
 
 import { colors } from '../values/colors';
 import { useForm, useField } from 'react-final-form-hooks';
@@ -65,10 +66,27 @@ const HeaderBackButton = ({ navigation }) => {
 
 const NewEnvelope = ({ route, navigation }) => {
   const [isEditing, setIsEditing] = useState();
-
-  const onSubmit = (values) => {
-    console.log(values);
-  };
+  const onSubmit = useCallback(
+    async (values) => {
+      const valuesToSubmit = {
+        ...values,
+        valueGoal: values.valueGoal * 100,
+      };
+      console.log({ valuesToSubmit });
+      try {
+        if (isEditing) {
+          // const response = axios.
+        }
+        const response = axios.post('/users/1/goals', valuesToSubmit);
+        console.log(response.data);
+        route.params?.onSuccess();
+        navigation.goBack();
+      } catch (ex) {
+        console.warn(ex);
+      }
+    },
+    [isEditing, navigation, route],
+  );
 
   const { form, handleSubmit, pristine, submitting } = useForm({
     onSubmit,
