@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { Provider as ReduxProvider } from 'react-redux';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -9,12 +9,18 @@ import {
   DefaultTheme as NavigationTheme,
 } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import SplashScreen from 'react-native-splash-screen';
 
 import { store } from './redux';
+import HomeScreen from './screens/HomeScreen';
+import MovementsScreen from './screens/MovementsScreen';
+import GroupsScreen from './screens/GroupsScreen';
+import NewGroup from './screens/NewGroup';
 import { colors } from './values/colors';
 import { StatusBar } from 'react-native';
+import EnvelopesScreen from './screens/EnvelopesScreen';
+import NewEnvelope from './screens/NewEnvelope';
 
-import HomeScreen from './screens/HomeScreen';
 import ContentScreen from './screens/ContentScreen';
 import ContentVisualizationScreen from './screens/ContentVisualizationScreen';
 
@@ -43,6 +49,7 @@ const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
 const tabNavigatorOptions = {
+  keyboardHidesTabBar: true,
   inactiveBackgroundColor: colors.accent,
   activeBackgroundColor: colors.accent,
   inactiveTintColor: colors.background,
@@ -57,6 +64,7 @@ const homeOptions = {
 };
 
 const envelopeOptions = {
+  title: 'Envelopes',
   tabBarIcon: (props) => <MaterialCommunityIcons name="email" {...props} />,
 };
 
@@ -65,8 +73,50 @@ const studyOptions = {
   title: 'Conteúdos',
 };
 
-const settingsOptions = {
-  tabBarIcon: (props) => <MaterialCommunityIcons name="settings" {...props} />,
+const movementsOptions = {
+  tabBarIcon: (props) => (
+    <MaterialCommunityIcons name="clipboard-flow" {...props} />
+  ),
+};
+
+const gruopsOptions = {
+  tabBarIcon: (props) => (
+    <MaterialCommunityIcons name="account-group" {...props} />
+  ),
+};
+
+const EnvelopeStackScreen = () => {
+  return (
+    <Stack.Navigator headerMode="none">
+      <Stack.Screen
+        options={envelopeOptions}
+        name="Envelope"
+        component={EnvelopesScreen}
+      />
+      <Stack.Screen
+        options={studyOptions}
+        name="NewEnvelope"
+        component={NewEnvelope}
+      />
+    </Stack.Navigator>
+  );
+};
+
+const GroupStackScreen = () => {
+  return (
+    <Stack.Navigator headerMode="none">
+      <Stack.Screen
+        options={gruopsOptions}
+        name="Group"
+        component={GroupsScreen}
+      />
+      <Stack.Screen
+        options={gruopsOptions}
+        name="NewGroup"
+        component={NewGroup}
+      />
+    </Stack.Navigator>
+  );
 };
 
 const ContentManagement = () => {
@@ -90,10 +140,17 @@ const ContentManagement = () => {
 };
 
 function App() {
+  useEffect(() => {
+    SplashScreen.hide();
+  });
+
   return (
     <ReduxProvider store={store}>
       <PaperProvider theme={paperTheme}>
-        <StatusBar backgroundColor={colors.primary} barStyle="light-content" />
+        <StatusBar
+          backgroundColor={colors.primaryDark}
+          barStyle="light-content"
+        />
         <NavigationContainer theme={navigationTheme}>
           <Tab.Navigator
             tabBarOptions={tabNavigatorOptions}
@@ -105,8 +162,8 @@ function App() {
             />
             <Tab.Screen
               options={envelopeOptions}
-              name="Home2"
-              component={HomeScreen}
+              name="Envelope"
+              component={EnvelopeStackScreen}
             />
             <Tab.Screen
               options={studyOptions}
@@ -114,9 +171,14 @@ function App() {
               component={ContentManagement}
             />
             <Tab.Screen
-              options={settingsOptions}
-              name="Config"
-              component={HomeScreen}
+              options={movementsOptions}
+              name="Movements"
+              component={MovementsScreen}
+            />
+            <Tab.Screen
+              options={gruopsOptions}
+              name="Grupos"
+              component={GroupStackScreen}
             />
           </Tab.Navigator>
         </NavigationContainer>
