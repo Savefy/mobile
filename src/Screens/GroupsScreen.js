@@ -15,7 +15,6 @@ const styles = StyleSheet.create({
   },
   headerText: {
     fontSize: 19,
-    paddingLeft: 16,
     fontFamily: 'Montserrat-SemiBold',
     paddingBottom: 4,
   },

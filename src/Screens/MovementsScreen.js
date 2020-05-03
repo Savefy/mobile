@@ -1,19 +1,32 @@
 import React, { PureComponent } from 'react';
-import { FlatList, StyleSheet, View, Text } from 'react-native';
+import { FlatList, StyleSheet, View, Text, RefreshControl } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import { Appbar, Card } from 'react-native-paper';
 import moment from 'moment-timezone';
+import axios from 'axios';
 
-import { moviments } from './testeData';
 import { colors } from '../values/colors';
 import { maskDecimal } from '../helpers/masks';
 
 const { Header, Content } = Appbar;
 
 const styles = StyleSheet.create({
+  flatList: {
+    paddingVertical: 16,
+    paddingRight: 8,
+  },
   font: {
+    fontSize: 16,
     fontFamily: 'Montserrat-SemiBold',
+  },
+  subtitleFont: {
+    fontFamily: 'Montserrat-Medium',
+    fontSize: 14,
+  },
+  dateFont: {
+    fontSize: 16,
+    opacity: 0.8,
   },
   HeaderText: {
     fontSize: 19,
@@ -61,13 +74,39 @@ const styles = StyleSheet.create({
   dateMovement: {
     padding: 8,
   },
+  dateContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
 });
+
+const KEY_EXTRACTOR = (item) => String(item.id);
 
 class MovementsScreen extends PureComponent {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      movements: [],
+      fetching: false,
+    };
   }
+
+  componentDidMount() {
+    this._requestMovements();
+  }
+
+  _requestMovements = async () => {
+    try {
+      this.setState({ fetching: true });
+      const { data } = await axios.get('/users/1/movements');
+
+      this.setState({ movements: data.data });
+    } catch (ex) {
+      console.warn(ex);
+    } finally {
+      this.setState({ fetching: false });
+    }
+  };
 
   _formatSubtitle = (type, value) => {
     const operation = type === 'debit' ? '-' : '+';
@@ -76,33 +115,35 @@ class MovementsScreen extends PureComponent {
 
   _renderCategory = (category) => {
     let iconName;
-    if (category === 'ALIMENTACAO') {
-      iconName = 'food';
-    } else if (category === 'SAUDE') {
-      iconName = 'heart-pulse';
-    } else if (category === 'TRANSPORTE') {
-      iconName = 'bus';
-    } else if (category === 'CASA') {
-      iconName = 'home';
-    } else if (category === 'EDUCACAO') {
+    if (category === 'educação') {
       iconName = 'book-multiple';
+    } else if (category === 'outros') {
+      iconName = 'dots-horizontal-circle-outline';
+    } else if (category === 'alimentação') {
+      iconName = 'food';
+    } else if (category === 'casa') {
+      iconName = 'home';
+    } else if (category === 'saúde') {
+      iconName = 'hospital';
+    } else if (category === 'transporte') {
+      iconName = 'bus';
     } else {
-      iconName = 'settings-helper';
+      iconName = 'cash';
     }
     return <MaterialCommunityIcons name={iconName} size={32} />;
   };
 
   _renderDate = (date) => {
     return (
-      <View>
-        <Text style={styles.font}>{moment(date).format('DD/MM')}</Text>
-        <Text style={styles.font}>{moment(date).format('HH:mm')}</Text>
+      <View style={styles.dateContainer}>
+        <Text style={styles.dateFont}>{moment(date).format('DD/MM')}</Text>
+        <Text style={styles.dateFont}>{moment(date).format('HH:mm')}</Text>
       </View>
     );
   };
 
   _renderMovementItem = (item) => {
-    const { type, value, date, name, category } = item.item;
+    const { type, value, date, title, category } = item.item;
     const subtitle = this._formatSubtitle(type, value);
     return (
       <View>
@@ -111,9 +152,9 @@ class MovementsScreen extends PureComponent {
             <View style={styles.balloonTriangle} />
             <Card style={styles.balloon}>
               <Card.Title
-                title={name}
+                title={title}
                 titleStyle={styles.font}
-                subtitleStyle={styles.font}
+                subtitleStyle={styles.subtitleFont}
                 subtitle={subtitle}
                 right={() => this._renderDate(date)}
                 rightStyle={styles.dateMovement}
@@ -128,11 +169,19 @@ class MovementsScreen extends PureComponent {
   };
 
   _renderList = () => {
+    const { movements, fetching } = this.state;
     return (
       <FlatList
-        data={moviments}
+        refreshControl={
+          <RefreshControl
+            refreshing={fetching}
+            onRefresh={this._requestMovements}
+          />
+        }
+        data={movements}
+        contentContainerStyle={styles.flatList}
         renderItem={this._renderMovementItem}
-        keyExtractor={(item) => item.id}
+        keyExtractor={KEY_EXTRACTOR}
       />
     );
   };
