@@ -1,15 +1,17 @@
-import React, { useCallback } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import React, { useCallback, useEffect, useState } from 'react';
+import { View, Text, StyleSheet, RefreshControl } from 'react-native';
 
 import {} from '@react-navigation/core';
 
 import { Appbar, ProgressBar, IconButton, FAB } from 'react-native-paper';
 import { FlatList } from 'react-native-gesture-handler';
+import axios from 'axios';
 
 import { ENVELOPES } from '../values/strings';
 import { colors } from '../values/colors';
 import Envelope from '../assets/envelope.svg';
 import moment from 'moment-timezone';
+import { maskDecimal } from '../helpers/masks';
 
 const { Header, Content } = Appbar;
 
@@ -97,6 +99,27 @@ const NewEnvelopeFAB = ({ navigation }) => {
 };
 
 const EnvelopesScreen = ({ navigation }) => {
+  const [fetching, setFetching] = useState(false);
+  const [envelopes, setEnvelopes] = useState(undefined);
+
+  const requestEnvelopes = useCallback(async () => {
+    try {
+      setFetching(true);
+      const response = await axios.get('/users/1/goals');
+      const { data } = response;
+      setEnvelopes(data.data);
+      console.log({ data });
+    } catch (ex) {
+      console.warn(ex);
+    } finally {
+      setFetching(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    requestEnvelopes();
+  }, [requestEnvelopes]);
+
   const renderItem = useCallback(
     ({ item }) => {
       return (
@@ -114,7 +137,9 @@ const EnvelopesScreen = ({ navigation }) => {
                 progress={item.percent}
                 color={colors.textOnPrimary}
               />
-              <Text style={styles.envelopeValue}>R$ {item.valueGoal}</Text>
+              <Text style={styles.envelopeValue}>
+                R$ {maskDecimal(item.valueGoal / 100)}
+              </Text>
             </View>
             <EditEnvelopeButton item={item} navigation={navigation} />
           </View>
@@ -130,7 +155,10 @@ const EnvelopesScreen = ({ navigation }) => {
         <Content titleStyle={styles.headerTitle} title="Envelopes" />
       </Header>
       <FlatList
-        data={ENVELOPES}
+        data={envelopes}
+        refreshControl={
+          <RefreshControl refreshing={fetching} onRefresh={requestEnvelopes} />
+        }
         renderItem={renderItem}
         ItemSeparatorComponent={Spacer}
         contentContainerStyle={styles.flatListConteiner}
