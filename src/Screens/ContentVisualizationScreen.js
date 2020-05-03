@@ -4,8 +4,7 @@ import { StyleSheet, View, Text, Image, FlatList } from 'react-native';
 import { Appbar } from 'react-native-paper';
 import { colors } from '../values/colors';
 
-const { Header, Content, Action, BackAction } = Appbar;
-import Envelope from '../assets/envelope.svg';
+const { Header, Content, BackAction } = Appbar;
 
 const styles = StyleSheet.create({
   appBarText: {
