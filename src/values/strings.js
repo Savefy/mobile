@@ -45,3 +45,114 @@ export const STATUS = [
       'https://joveminvestidor.com.br/wp-content/uploads/2019/11/600px-Thiago_Nigro_fundador_do_canal_O_Primo_Rico.png',
   },
 ];
+
+export const CONTENT = [
+  {
+    id: '1',
+    key: 'compras',
+    contents: [
+      {
+        title: 'lorem lorem ipsum',
+        icon:
+          'https://joveminvestidor.com.br/wp-content/uploads/2019/11/600px-Thiago_Nigro_fundador_do_canal_O_Primo_Rico.png',
+        description:
+          'lorem lorem ipsum lorem lorem ipsum lorem lorem ipsum lorem lorem ipsum',
+      },
+      {
+        title: 'lorem lorem ipsum',
+        icon:
+          'https://joveminvestidor.com.br/wp-content/uploads/2019/11/600px-Thiago_Nigro_fundador_do_canal_O_Primo_Rico.png',
+        description:
+          'lorem lorem ipsum lorem lorem ipsum lorem lorem ipsum lorem lorem ipsum',
+      },
+      {
+        title: 'lorem lorem ipsum',
+        icon:
+          'https://joveminvestidor.com.br/wp-content/uploads/2019/11/600px-Thiago_Nigro_fundador_do_canal_O_Primo_Rico.png',
+        description:
+          'lorem lorem ipsum lorem lorem ipsum lorem lorem ipsum lorem lorem ipsum',
+      },
+    ],
+  },
+  {
+    id: '2',
+    key: 'investimentos',
+    contents: [
+      {
+        title: 'lorem lorem ipsum',
+        icon:
+          'https://joveminvestidor.com.br/wp-content/uploads/2019/11/600px-Thiago_Nigro_fundador_do_canal_O_Primo_Rico.png',
+        description:
+          'lorem lorem ipsum lorem lorem ipsum lorem lorem ipsum lorem lorem ipsum',
+      },
+      {
+        title: 'lorem lorem ipsum',
+        icon:
+          'https://joveminvestidor.com.br/wp-content/uploads/2019/11/600px-Thiago_Nigro_fundador_do_canal_O_Primo_Rico.png',
+        description:
+          'lorem lorem ipsum lorem lorem ipsum lorem lorem ipsum lorem lorem ipsum',
+      },
+      {
+        title: 'lorem lorem ipsum',
+        icon:
+          'https://joveminvestidor.com.br/wp-content/uploads/2019/11/600px-Thiago_Nigro_fundador_do_canal_O_Primo_Rico.png',
+        description:
+          'lorem lorem ipsum lorem lorem ipsum lorem lorem ipsum lorem lorem ipsum',
+      },
+    ],
+  },
+  {
+    id: '3',
+    key: 'extra',
+    contents: [
+      {
+        title: 'lorem lorem ipsum',
+        icon:
+          'https://joveminvestidor.com.br/wp-content/uploads/2019/11/600px-Thiago_Nigro_fundador_do_canal_O_Primo_Rico.png',
+        description:
+          'lorem lorem ipsum lorem lorem ipsum lorem lorem ipsum lorem lorem ipsum',
+      },
+      {
+        title: 'lorem lorem ipsum',
+        icon:
+          'https://joveminvestidor.com.br/wp-content/uploads/2019/11/600px-Thiago_Nigro_fundador_do_canal_O_Primo_Rico.png',
+        description:
+          'lorem lorem ipsum lorem lorem ipsum lorem lorem ipsum lorem lorem ipsum',
+      },
+      {
+        title: 'lorem lorem ipsum',
+        icon:
+          'https://joveminvestidor.com.br/wp-content/uploads/2019/11/600px-Thiago_Nigro_fundador_do_canal_O_Primo_Rico.png',
+        description:
+          'lorem lorem ipsum lorem lorem ipsum lorem lorem ipsum lorem lorem ipsum',
+      },
+    ],
+  },
+  {
+    id: '4',
+    key: 'termos',
+    contents: [
+      {
+        title: 'lorem lorem ipsum',
+        icon:
+          'https://joveminvestidor.com.br/wp-content/uploads/2019/11/600px-Thiago_Nigro_fundador_do_canal_O_Primo_Rico.png',
+        description:
+          'lorem lorem ipsum lorem lorem ipsum lorem lorem ipsum lorem lorem ipsum',
+      },
+      {
+        title: 'lorem lorem ipsum',
+        icon:
+          'https://joveminvestidor.com.br/wp-content/uploads/2019/11/600px-Thiago_Nigro_fundador_do_canal_O_Primo_Rico.png',
+        description:
+          'lorem lorem ipsum lorem lorem ipsum lorem lorem ipsum lorem lorem ipsum',
+      },
+      {
+        title: 'lorem lorem ipsum',
+        icon:
+          'https://joveminvestidor.com.br/wp-content/uploads/2019/11/600px-Thiago_Nigro_fundador_do_canal_O_Primo_Rico.png',
+        description:
+          'lorem lorem ipsum lorem lorem ipsum lorem lorem ipsum lorem lorem ipsum',
+      },
+    ],
+  },
+];
