@@ -94,7 +94,7 @@ class Cards extends PureComponent {
           <View style={styles.cardsCol}>
             <Card
               style={styles.card}
-              onPress={() => this._showContent('extra')}>
+              onPress={() => this._showContent('rendaExtra')}>
               <ContentCard>
                 <View>
                   <LoseIcon width={110} height={110} />

@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, { PureComponent } from 'react';
 
 import { StyleSheet, View, Text, Image, FlatList } from 'react-native';
@@ -28,8 +29,8 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   contentIcon: {
-    width: 80,
-    height: 80,
+    width: 90,
+    height: 90,
     marginRight: 10,
   },
   contentTitle: {
@@ -50,46 +51,21 @@ class ContentVisualizationScreen extends PureComponent {
   }
 
   state = {
-    contents: {
-      compras: [
-        {
-          image:
-            'https://joveminvestidor.com.br/wp-content/uploads/2019/11/600px-Thiago_Nigro_fundador_do_canal_O_Primo_Rico.png',
-          title: 'Como economizar nas compras do mercado',
-          resume: 'lorem ipsum lorem ipsum lorem ipsum lorem ipsum',
-        },
-        {
-          image:
-            'https://joveminvestidor.com.br/wp-content/uploads/2019/11/600px-Thiago_Nigro_fundador_do_canal_O_Primo_Rico.png',
-          title: 'Como economizar nas compras do mercado',
-          resume: 'lorem ipsum lorem ipsum lorem ipsum lorem ipsum',
-        },
-      ],
-      investimentos: [
-        {
-          image:
-            'https://joveminvestidor.com.br/wp-content/uploads/2019/11/600px-Thiago_Nigro_fundador_do_canal_O_Primo_Rico.png',
-          title: 'Melhores investimentos para 2020',
-          resume: 'lorem ipsum lorem ipsum lorem ipsum lorem ipsum',
-        },
-      ],
-      extra: [
-        {
-          image:
-            'https://joveminvestidor.com.br/wp-content/uploads/2019/11/600px-Thiago_Nigro_fundador_do_canal_O_Primo_Rico.png',
-          title: '5 opções de renda extra',
-          resume: 'lorem ipsum lorem ipsum lorem ipsum lorem ipsum',
-        },
-      ],
-      termos: [
-        {
-          image:
-            'https://joveminvestidor.com.br/wp-content/uploads/2019/11/600px-Thiago_Nigro_fundador_do_canal_O_Primo_Rico.png',
-          title: 'O que é Taxa Selic?',
-          resume: 'lorem ipsum lorem ipsum lorem ipsum lorem ipsum',
-        },
-      ],
-    },
+    contents: [],
+  };
+
+  componentDidMount = () => {
+    const { key } = this.props.route.params;
+    axios
+      .get('/contents', { params: { category: key } })
+      .then((response) => {
+        this.setState({
+          contents: response.data.data,
+        });
+      })
+      .catch((error) => {
+        console.log('Erro: ', error);
+      });
   };
 
   _back = () => {
@@ -103,14 +79,14 @@ class ContentVisualizationScreen extends PureComponent {
       <View style={styles.contentCard}>
         <Image
           source={{
-            uri: item.image,
+            uri: item.imageUrl,
           }}
           style={styles.contentIcon}
         />
         <View style={styles.contentColumn}>
           <Text style={styles.contentTitle}>{item.title}</Text>
           <Text numberOfLines={4} style={styles.resumeContent}>
-            {item.resume}
+            {item.description}
           </Text>
         </View>
       </View>
@@ -123,7 +99,7 @@ class ContentVisualizationScreen extends PureComponent {
         return 'Compras';
       case 'investimentos':
         return 'Investimentos';
-      case 'extra':
+      case 'rendaExtra':
         return 'Renda extra';
       case 'termos':
         return 'Terminologias';
@@ -145,7 +121,7 @@ class ContentVisualizationScreen extends PureComponent {
           />
         </Header>
         <View style={styles.container}>
-          <FlatList data={contents[key]} renderItem={this._renderContent} />
+          <FlatList data={contents} renderItem={this._renderContent} />
         </View>
       </View>
     );
