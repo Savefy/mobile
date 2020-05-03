@@ -2,17 +2,21 @@ import React, { useEffect, useState, useCallback } from 'react';
 import {
   StyleSheet,
   View,
-  TextInput as RNInput,
   Text,
   ScrollView,
+  TouchableOpacity,
 } from 'react-native';
 
 import { Appbar, TextInput, Button } from 'react-native-paper';
-const { Header, Content, BackAction } = Appbar;
 import axios from 'axios';
+import DateTimePicker from '@react-native-community/datetimepicker';
+import { useForm, useField } from 'react-final-form-hooks';
+import { TextInputMask } from 'react-native-masked-text';
+import moment from 'moment-timezone';
 
 import { colors } from '../values/colors';
-import { useForm, useField } from 'react-final-form-hooks';
+
+const { Header, Content, BackAction } = Appbar;
 
 const styles = StyleSheet.create({
   headerTitle: {
@@ -39,7 +43,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Montserrat-Medium',
   },
   valueGoal: {
-    fontSize: 40,
+    fontSize: 30,
     fontWeight: 'normal',
     fontFamily: 'Montserrat-Black',
     color: colors.background,
@@ -66,13 +70,14 @@ const HeaderBackButton = ({ navigation }) => {
 
 const NewEnvelope = ({ route, navigation }) => {
   const [isEditing, setIsEditing] = useState();
+  const [showDatePicker, setShowDatePicker] = useState(false);
+
   const onSubmit = useCallback(
     async (values) => {
       const valuesToSubmit = {
         ...values,
-        valueGoal: values.valueGoal * 100,
+        valueGoal: Number(values.valueGoal.replace(/R\$ |\.|,/gm, '')),
       };
-      console.log({ valuesToSubmit });
       try {
         if (isEditing) {
           // const response = axios.
@@ -100,6 +105,16 @@ const NewEnvelope = ({ route, navigation }) => {
 
   const envelope = route.params?.envelope;
 
+  const setDatePickerVisible = useCallback(() => {
+    setShowDatePicker(true);
+  }, []);
+
+  const onChangeDate = (event, date) => {
+    setShowDatePicker(false);
+    const { onChange } = accomplishAt.input;
+    onChange(date);
+  };
+
   useEffect(() => {
     setIsEditing(Boolean(envelope?.id));
     if (envelope) {
@@ -119,15 +134,20 @@ const NewEnvelope = ({ route, navigation }) => {
       <ScrollView style={styles.content}>
         <View style={styles.valueInput}>
           <Text style={styles.valueText}>Valor</Text>
-          <RNInput
-            {...valueGoal.input}
-            label="Valor"
-            mode="outlined"
-            placeholder="0,00"
-            keyboardType="number-pad"
+          <TextInputMask
+            type="money"
+            placeholder="R$ 0,00"
+            options={{
+              precision: 2,
+              separator: ',',
+              delimiter: '.',
+              unit: 'R$ ',
+              suffixUnit: '',
+            }}
             placeholderTextColor={colors.backgroundOpacity}
             style={styles.valueGoal}
             onChangeText={valueGoal.input.onChange}
+            {...valueGoal.input}
           />
         </View>
         <View style={styles.formInput}>
@@ -148,22 +168,40 @@ const NewEnvelope = ({ route, navigation }) => {
             onChangeText={description.input.onChange}
           />
         </View>
-        <View style={styles.formInput}>
-          <TextInput
-            {...accomplishAt.input}
-            label="Data"
-            mode="outlined"
-            onChangeText={accomplishAt.input.onChange}
-          />
-        </View>
+        <TouchableOpacity onPress={setDatePickerVisible}>
+          <View style={styles.formInput}>
+            <TextInput
+              label="Data"
+              mode="outlined"
+              value={
+                accomplishAt.input.value
+                  ? moment(accomplishAt.input.value).format('DD/MM/YYYY')
+                  : null
+              }
+              onChangeText={description.input.onChange}
+              editable={false}
+            />
+          </View>
+        </TouchableOpacity>
         <Button
           mode="contained"
+          loading={submitting}
+          disabled={pristine || submitting}
           onPress={handleSubmit}
           color={colors.primaryDark}
           contentStyle={styles.buttonContent}
           labelStyle={styles.saveButton}>
           Salvar
         </Button>
+        {showDatePicker && (
+          <DateTimePicker
+            mode="date"
+            is24Hour={true}
+            display="calendar"
+            value={accomplishAt.input.value || new Date()}
+            onChange={onChangeDate}
+          />
+        )}
       </ScrollView>
     </>
   );
