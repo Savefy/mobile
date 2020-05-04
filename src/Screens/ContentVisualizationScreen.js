@@ -1,7 +1,15 @@
 import axios from 'axios';
 import React, { PureComponent } from 'react';
 
-import { StyleSheet, View, Text, Image, FlatList } from 'react-native';
+import {
+  StyleSheet,
+  View,
+  Text,
+  Image,
+  FlatList,
+  Linking,
+  TouchableOpacity,
+} from 'react-native';
 import { Appbar } from 'react-native-paper';
 import { colors } from '../values/colors';
 
@@ -44,6 +52,12 @@ const styles = StyleSheet.create({
     fontFamily: 'Montserrat-Medium',
   },
 });
+const categories = {
+  compras: 'Compras',
+  investimentos: 'Investimentos',
+  rendaExtra: 'Renda extra',
+  termos: 'Terminologias',
+};
 
 class ContentVisualizationScreen extends PureComponent {
   constructor(props) {
@@ -76,36 +90,23 @@ class ContentVisualizationScreen extends PureComponent {
 
   _renderContent = ({ item }) => {
     return (
-      <View style={styles.contentCard}>
-        <Image
-          source={{
-            uri: item.imageUrl,
-          }}
-          style={styles.contentIcon}
-        />
-        <View style={styles.contentColumn}>
-          <Text style={styles.contentTitle}>{item.title}</Text>
-          <Text numberOfLines={4} style={styles.resumeContent}>
-            {item.description}
-          </Text>
+      <TouchableOpacity onPress={() => Linking.openURL(item.sourceUrl)}>
+        <View style={styles.contentCard}>
+          <Image
+            source={{
+              uri: item.imageUrl,
+            }}
+            style={styles.contentIcon}
+          />
+          <View style={styles.contentColumn}>
+            <Text style={styles.contentTitle}>{item.title}</Text>
+            <Text numberOfLines={4} style={styles.resumeContent}>
+              {item.description}
+            </Text>
+          </View>
         </View>
-      </View>
+      </TouchableOpacity>
     );
-  };
-
-  _formatTitle = (title) => {
-    switch (title) {
-      case 'compras':
-        return 'Compras';
-      case 'investimentos':
-        return 'Investimentos';
-      case 'rendaExtra':
-        return 'Renda extra';
-      case 'termos':
-        return 'Terminologias';
-      default:
-        return title;
-    }
   };
 
   render() {
@@ -115,10 +116,7 @@ class ContentVisualizationScreen extends PureComponent {
       <View>
         <Header>
           <BackAction color={colors.textOnPrimary} onPress={this._back} />
-          <Content
-            title={this._formatTitle(key)}
-            titleStyle={styles.appBarText}
-          />
+          <Content title={categories[key]} titleStyle={styles.appBarText} />
         </Header>
         <View style={styles.container}>
           <FlatList data={contents} renderItem={this._renderContent} />
